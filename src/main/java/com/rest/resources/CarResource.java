@@ -4,6 +4,7 @@ import com.rest.RESTStartup;
 import com.rest.dto.Car;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
 import java.time.LocalDateTime;
@@ -30,5 +31,49 @@ public class CarResource {
         db.put(id.intValue(), car);
 
         return Response.ok(db.get(id.intValue())).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCars() {
+        return Response.ok(RESTStartup.getCarDB()).build();
+    }
+
+    @PUT
+    @Path("{carId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response updateCar(MultivaluedMap<String, String> formParams,
+                              @PathParam("carId") Integer carId) {
+
+        Map<Integer, Car> db = RESTStartup.getCarDB();
+        Boolean exists = db.containsKey(carId);
+
+        if (!exists) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("{\"message\": 'Car Id not found'}")
+                    .build();
+        }
+
+        String licenceplate = formParams.getFirst("licenceplate");
+        String color = formParams.getFirst("color");
+
+        Car car = db.get(carId);
+
+        if ((licenceplate != null)) {
+            car.setLicencePlate(licenceplate);
+        }
+        if ((color != null)) {
+            car.setColor(color);
+        }
+
+        db.replace(carId, car);
+
+        return Response.ok(car).build();
+    }
+
+    public Response deleteCar(Integer id) {
+
+        return null;
     }
 }
