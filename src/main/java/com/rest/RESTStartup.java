@@ -1,22 +1,38 @@
 package com.rest;
 
 import com.rest.dto.Car;
+import com.rest.resources.CarResource;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @ApplicationPath("reststart")
 public class RESTStartup extends Application {
 
-    private static Map<Integer, Car> carDB;
+//    private static Map<Integer, Car> carDB;
+
+    @Override
+    public Set<Object> getSingletons() {
+        Set<Object> singeltons = new HashSet<>();
+        singeltons.add(new CarResource());
+
+        return singeltons;
+    }
+
+    @Override
+    public Set<Class<?>> getClasses() {
+        return super.getClasses();
+    }
 
     public RESTStartup() {
-        carDB = new HashMap<>();
+//        carDB = new HashMap<>();
     }
 
-    public static Map<Integer, Car> getCarDB() {
-        return carDB;
-    }
+//    public static Map<Integer, Car> getCarDB() {
+//        return carDB;
+//    }
 }
