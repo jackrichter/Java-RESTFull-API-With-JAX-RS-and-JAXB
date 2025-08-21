@@ -51,7 +51,7 @@ public class CarResource {
 
         if (!exists) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("{\"message\": 'Car Id not found'}")
+                    .entity("{\"message\": \"Car Id not found\"}")
                     .build();
         }
 
@@ -72,8 +72,23 @@ public class CarResource {
         return Response.ok(car).build();
     }
 
-    public Response deleteCar(Integer id) {
+    @DELETE
+    @Path("{carId}")
+    public Response deleteCar(@PathParam("carId") Integer carId) {
 
-        return null;
+        Map<Integer, Car> db = RESTStartup.getCarDB();
+        boolean exists = db.containsKey(carId);
+
+        if (!exists) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("{\"message\": \"Car Id not found\"}")
+                    .build();
+        }
+
+        db.remove(carId);
+
+        return Response.status(Response.Status.OK)
+                .entity("{\"message\": \"Car deleted successfully\"}")
+                .build();
     }
 }
