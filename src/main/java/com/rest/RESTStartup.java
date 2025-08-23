@@ -1,6 +1,7 @@
 package com.rest;
 
 import com.rest.dto.Car;
+import com.rest.marshall.HashMapWriter;
 import com.rest.resources.CarResource;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
@@ -25,7 +26,9 @@ public class RESTStartup extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return super.getClasses();
+        Set<Class<?>> set = new HashSet<>();
+        set.add(HashMapWriter.class);
+        return set;
     }
 
     public RESTStartup() {

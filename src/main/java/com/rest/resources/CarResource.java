@@ -25,7 +25,7 @@ public class CarResource {
 //        Map<Integer, Car> db = RESTStartup.getCarDB();
         Map<Integer, Car> db = carDB;
 
-                Double id = Math.random() * 1000 + 1;
+        Double id = Math.random() * 1000 + 1;
 
         Car car = new Car(licenceplate, color);
 
@@ -35,7 +35,7 @@ public class CarResource {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getCars() {
 //        return Response.ok(RESTStartup.getCarDB()).build();
         return Response.ok(carDB).build();
