@@ -2,6 +2,7 @@ package com.rest.resources;
 
 import com.rest.RESTStartup;
 import com.rest.dto.Car;
+import com.rest.marshall.CarDBWrapper;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -15,6 +16,8 @@ import java.util.Map;
 public class CarResource {
 
     private HashMap<Integer, Car> carDB = new HashMap<>();
+
+    private final String MSG = "{\"message\": \"The following cars weren't able to be added, their keys already exist: ";
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -32,6 +35,29 @@ public class CarResource {
         db.put(id.intValue(), car);
 
         return Response.ok(db.get(id.intValue())).build();
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_XML)
+    public Response addCar(CarDBWrapper cars) {
+
+        StringBuilder sb = new StringBuilder(MSG);
+
+        cars.getCars().forEach((k, v) -> {
+            if (carDB.containsKey(k)) {
+                sb.append(k).append(",");
+            } else {
+                carDB.put(k, v);
+            }
+        });
+
+        if (sb.toString().matches(".*\\d+.*")) {
+            sb.append("\"}");
+            return Response.ok(sb.toString()).build();
+        }
+
+        return Response.ok("{\"message\": \"Cars successfully added\"}").build();
     }
 
     @GET
