@@ -1,12 +1,18 @@
 package com.rest.dto;
 
+import com.rest.util.LocalDateTimeXMLAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.time.LocalDateTime;
 
 public class Car {
 
     private String licencePlate;
     private String color;
+
+//    @XmlJavaTypeAdapter(LocalDateTimeXMLAdapter.class)    // Alternative 1. Alternative 2 is through package-info.java!!
     private LocalDateTime enteredDate;
+
     private String overnight;
 
     public Car() {
