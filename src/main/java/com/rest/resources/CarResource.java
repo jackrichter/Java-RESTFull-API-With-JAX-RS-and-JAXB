@@ -23,14 +23,15 @@ public class CarResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response addCar(@FormParam("licenceplate") String licenceplate,
-                           @FormParam("color") String color) {
+                           @FormParam("color") String color,
+                           @FormParam("entereddate") LocalDateTime enteredDate) {
 
 //        Map<Integer, Car> db = RESTStartup.getCarDB();
         Map<Integer, Car> db = carDB;
 
         Double id = Math.random() * 1000 + 1;
 
-        Car car = new Car(licenceplate, color);
+        Car car = new Car(licenceplate, color,  enteredDate);
 
         db.put(id.intValue(), car);
 

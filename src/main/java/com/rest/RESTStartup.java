@@ -3,6 +3,7 @@ package com.rest;
 import com.rest.dto.Car;
 import com.rest.marshall.HashMapWriter;
 import com.rest.resources.CarResource;
+import com.rest.util.LocalDateTimeParamConverterProvider;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
@@ -28,6 +29,7 @@ public class RESTStartup extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> set = new HashSet<>();
         set.add(HashMapWriter.class);
+        set.add(LocalDateTimeParamConverterProvider.class);
         return set;
     }
 

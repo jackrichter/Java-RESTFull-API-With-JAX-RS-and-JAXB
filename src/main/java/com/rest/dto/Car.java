@@ -19,9 +19,10 @@ public class Car {
         this.overnight = overnight;
     }
 
-    public Car(String licencePlate, String color) {
+    public Car(String licencePlate, String color, LocalDateTime enteredDate) {
         this.licencePlate = licencePlate;
         this.color = color;
+        this.enteredDate = enteredDate;
     }
 
     public String getLicencePlate() {
