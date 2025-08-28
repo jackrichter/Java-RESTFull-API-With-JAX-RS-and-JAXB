@@ -16,7 +16,6 @@ import java.util.Map;
 public class CarResource {
 
     private HashMap<Integer, Car> carDB = new HashMap<>();
-
     private final String MSG = "{\"message\": \"The following cars weren't able to be added, their keys already exist: ";
 
     @POST
@@ -65,7 +64,9 @@ public class CarResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getCars() {
 //        return Response.ok(RESTStartup.getCarDB()).build();
-        return Response.ok(carDB).build();
+        CarDBWrapper carsDbWrapper = new CarDBWrapper();
+        carsDbWrapper.setCars(carDB);
+        return Response.ok(carsDbWrapper).build();
     }
 
     @PUT
